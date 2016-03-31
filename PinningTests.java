@@ -7,6 +7,8 @@ public class PinningTests {
 	
 	public int _r = 1000;
 	private int _maxSize = 10000;
+	
+	//getText variable to substitute the getText() of the button
 	public String getText = "";
 	
 	//The original convertToInt() method.
@@ -65,27 +67,31 @@ public class PinningTests {
             return ".";
     }
     
-    //This text should return "X" if the first character in the 
+    //toString() should return "X" if the first character in the 
     //String returned by getText() is "X", else it should return "."
-    //It should cause a StringIndexOutOfBoundsException if getText()
-    //returns an empty string.
     @Test
-    public void toStringTest() {
-    	setText("X");
-    	assertEquals(toStringOld(), toStringNew());
-    	setText("XYZ");
-    	assertEquals(toStringOld(), toStringNew());
+    public void toStringNoMatchTest() {
     	setText("A");
     	assertEquals(toStringOld(), toStringNew());
-    	setText("ABC");
+    }
+    
+    //toString() should return "X" if the first character in the 
+    //String returned by getText() is "X", else it should return "."
+    @Test
+    public void toStringMatchTest() {
+    	setText("X");
     	assertEquals(toStringOld(), toStringNew());
-  
+    }
+    
+    //The toString() method should throw a 
+    //StringIndexOutOfBoundsException if getText()
+    //returns an empty string.
+    @Test
+    public void toStringErrorTest() {
     	boolean failEmptyStringOld = false;
     	boolean failEmptyStringNew = false;
     	setText("");
     	
-    	//The method originally throws a StringIndexOutOfBoundsException
-    	//if getText() returns an empty string 	
     	try {
     		toStringOld();
     	}
@@ -93,8 +99,6 @@ public class PinningTests {
     		failEmptyStringOld = true;
     	}
     	
-    	//The refactored method should also throw a StringIndexOutOfBoundsException
-    	//if getText() returns an empty string 	
     	try {
     		toStringNew();
     	}
@@ -105,17 +109,12 @@ public class PinningTests {
     	assertTrue(failEmptyStringOld && failEmptyStringNew);
     }
     
-    //Both of these methods should return the same integer passed in.
-    //Negative values should cause a NumberFormatException.
+    //Negative input values should cause a NumberFormatException.
     @Test
-    public void convertToIntTest() {
-    	assertEquals(convertToIntOld(0), convertToIntNew(0));
-    	assertEquals(convertToIntOld(Integer.MAX_VALUE), convertToIntNew(Integer.MAX_VALUE));
-    	
+    public void convertToIntNegativeTest() {
     	boolean negativeExceptionOld = false;
     	boolean negativeExceptionNew = false;
     	
-    	//The original method fails if we pass in a negative integer.
     	try {
     		convertToIntOld(-1);
     	}
@@ -123,7 +122,6 @@ public class PinningTests {
     		negativeExceptionOld = true;
     	}
     	
-    	//The refactored method should fail if we pass in a negative integer.
     	try {
     		convertToIntNew(-1);
     	}
@@ -131,5 +129,19 @@ public class PinningTests {
     		negativeExceptionNew = true;
     	}
     	assertTrue(negativeExceptionOld && negativeExceptionNew);
+    }
+    
+    //convertToInt() should return the same integer passed in.
+    //This test uses zero as an edge case.
+    @Test
+    public void convertToIntZeroTest() {
+    	assertEquals(convertToIntOld(0), convertToIntNew(0));
+    }
+    
+    //convertToInt() should return the same integer passed in.
+    //This test uses Java's max int value as an edge case.
+    @Test
+    public void convertToIntMaxTest() {
+    	assertEquals(convertToIntOld(Integer.MAX_VALUE), convertToIntNew(Integer.MAX_VALUE));
     }
 }
