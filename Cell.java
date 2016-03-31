@@ -9,20 +9,20 @@ public class Cell extends JButton {
     private int _maxSize = 10000;
     
     public Cell() {
-	super(" ");
-	setFont(new Font("Courier", Font.PLAIN, 12));
-	addActionListener(new CellButtonListener());
+	   super(" ");
+	   setFont(new Font("Courier", Font.PLAIN, 12));
+	   addActionListener(new CellButtonListener());
     }
 
     public Cell(boolean alive) {
-	super(" ");
-	setFont(new Font("Courier", Font.PLAIN, 12));
-	addActionListener(new CellButtonListener());
-	setAlive(alive);
+	   super(" ");
+	   setFont(new Font("Courier", Font.PLAIN, 12));
+	   addActionListener(new CellButtonListener());
+	   setAlive(alive);
     }
 
     public void resetBeenAlive() {
-	_beenAlive = false;
+	   _beenAlive = false;
     }
 
     public void reset() {
@@ -35,18 +35,27 @@ public class Cell extends JButton {
 	return (text.equals("X"));
     }
 
+    /*
     public String toString() {
-	String toReturn = new String("");
-	String currentState = getText();
-	for (int j = 0; j < _maxSize; j++) {
-	    toReturn += currentState;
-	}
-	if (toReturn.substring(0,1).equals("X")) {
-	    return toReturn.substring(0,1);
-	} else {
-	    return ".";
+	   String toReturn = new String("");
+	   String currentState = getText();
+	   for (int j = 0; j < _maxSize; j++) {
+	       toReturn += currentState;
+	   }
+	   if (toReturn.substring(0,1).equals("X")) {
+	       return toReturn.substring(0,1);
+	   } else {
+	   return ".";
 	}
 
+    } */
+    
+    public String toString() {
+        String toReturn = getText();
+        if (toReturn.substring(0,1).equals("X"))
+            return "X";
+        else
+            return ".";
     }
     
     public void setAlive(boolean a) {
@@ -78,12 +87,12 @@ public class Cell extends JButton {
 	    String currentText = source.getText();
 	    resetBeenAlive();
 	    if (currentText.equals(" ")) {
-		setAlive(true);
+		  setAlive(true);
 	    } else if (currentText.equals("X")) {
-		setAlive(false);
+		  setAlive(false);
 	    } else {
-		// This shouldn't happen
-		setAlive(false);
+		  // This shouldn't happen
+		  setAlive(false);
 	    }
 	}
     

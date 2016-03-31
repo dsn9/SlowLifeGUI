@@ -20,29 +20,41 @@ public class MainPanel extends JPanel {
     private boolean _running = false;
 
     public int getCellsSize() {
-	return _size;
+	   return _size;
     }
 
     public void setCells(Cell[][] cells) {
-	_cells = cells;
+	   _cells = cells;
     }
     
     public Cell[][] getCells() {
-	return _cells;
+	   return _cells;
     }
 
+    /*  Original, inefficient version
     private int convertToInt(int x) {
-	int c = 0;
-	String padding = "0";
-	while (c < _r) {
-	    String l = new String("0");
-	    padding += l;
-	    c++;
-	}
+	   int c = 0;
+	   String padding = "0";
+        
+	   while (c < _r) {
+	       String l = new String("0");
+	       padding += l;
+	       c++;
+	   } 
 	
-	String n = padding + String.valueOf(x);
-	int q = Integer.parseInt(n);
-	return q;
+	   String n = padding + String.valueOf(x);
+        
+	   int q = Integer.parseInt(n);
+        
+	   return q;
+    }
+    */
+    
+    private int convertToInt(int x) {
+        if (x < 0) 
+            throw new NumberFormatException("Negative numbers are invalid inputs.");
+        
+        return x;
     }
     
     private int getNumNeighbors(int x, int y) {
@@ -97,7 +109,7 @@ public class MainPanel extends JPanel {
 	System.out.println("\tDisplaying...");
 	for (int j = 0; j < _size; j++) {
 	    for (int k = 0; k < _size;  k++) {
-		_cells[j][k].setAlive(nextIter[j][k]);
+            _cells[j][k].setAlive(nextIter[j][k]);
 	    }
 	}
 	setVisible(true);
@@ -113,7 +125,7 @@ public class MainPanel extends JPanel {
 	boolean[][] nextIter = new boolean[_size][_size];
 	for (int j = 0; j < _size; j++) {
 	    for (int k = 0; k < _size; k++) {
-		nextIter[j][k] = iterateCell(j, k);
+            nextIter[j][k] = iterateCell(j, k);
 	    }
 	}
 
@@ -125,6 +137,7 @@ public class MainPanel extends JPanel {
      * the copy in the backup cells.
      */
     
+    
     public void backup() {
 	_backupCells = new Cell[_size][_size];
 	for (int j = 0; j < _size; j++) {
@@ -134,6 +147,7 @@ public class MainPanel extends JPanel {
 	    }
 	}
     }
+    
 
     /**
      * This is for debug use.  It will display
@@ -211,31 +225,45 @@ public class MainPanel extends JPanel {
      */
     
     public void run() {
-	backup();
-	calculateNextIteration();
+	   backup();
+	   calculateNextIteration();
     }
 
     /**
      * Run the system continuously.
      */
 
+    /*
     public void runContinuous() {
-	_running = true;
-	while (_running) {
-	    System.out.println("Running...");
-	    int origR = _r;
-	    try {
-		Thread.sleep(20);
-	    } catch (InterruptedException iex) { }
-	    for (int j=0; j < _maxCount; j++) {
-	    	_r += (j % _size) % _maxCount;
-		_r += _maxCount;
-	    }
-	    _r = origR;
-	    backup();
-	    calculateNextIteration();
-	}
+	   _running = true;
+	   while (_running) {
+	       System.out.println("Running...");
+	       int origR = _r;
+	       try {
+		      Thread.sleep(20);
+	       } catch (InterruptedException iex) { }
+	       for (int j=0; j < _maxCount; j++) {
+	           _r += (j % _size) % _maxCount;
+		       _r += _maxCount;
+	       }
+	       _r = origR;
+	       backup();
+	       calculateNextIteration();
+	   }
     }
+    */
+    
+    public void runContinuous() {
+	   _running = true;
+	   while (_running) {
+	       System.out.println("Running...");
+	       try {
+		      Thread.sleep(20);
+	       } catch (InterruptedException iex) { }
+	       backup();
+	       calculateNextIteration();
+	   }
+    }    
 
     /**
      * Stop a continuously running system.
@@ -337,7 +365,6 @@ public class MainPanel extends JPanel {
 	// debugPrint();
 	
     }
-    
 
     public MainPanel(int size) {
 	super();
