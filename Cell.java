@@ -35,8 +35,9 @@ public class Cell extends JButton {
 	return (text.equals("X"));
     }
 
-    /*
-    public String toString() {
+    //The original, inefficient toString() method.
+    //Uses unnecessary for loop to add extra characters.
+    public String toStringInefficient() {
 	   String toReturn = new String("");
 	   String currentState = getText();
 	   for (int j = 0; j < _maxSize; j++) {
@@ -48,7 +49,7 @@ public class Cell extends JButton {
 	   return ".";
 	}
 
-    } */
+    } 
     
     public String toString() {
         String toReturn = getText();

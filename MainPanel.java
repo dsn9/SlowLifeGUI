@@ -31,8 +31,10 @@ public class MainPanel extends JPanel {
 	   return _cells;
     }
 
-    /*  Original, inefficient version
-    private int convertToInt(int x) {
+    //  Original, inefficient version
+    // Uses while loop and many string operations
+    // to ultimately just return the integer passed in.
+    public int convertToIntInefficient(int x) {
 	   int c = 0;
 	   String padding = "0";
         
@@ -48,9 +50,9 @@ public class MainPanel extends JPanel {
         
 	   return q;
     }
-    */
     
-    private int convertToInt(int x) {
+    
+    public int convertToInt(int x) {
         if (x < 0) 
             throw new NumberFormatException("Negative numbers are invalid inputs.");
         
@@ -233,8 +235,9 @@ public class MainPanel extends JPanel {
      * Run the system continuously.
      */
 
-    /*
-    public void runContinuous() {
+    //The original, inefficient method.
+    //Uses unnecessary for loops that can be removed.
+    public void runContinuousInefficient() {
 	   _running = true;
 	   while (_running) {
 	       System.out.println("Running...");
@@ -251,7 +254,7 @@ public class MainPanel extends JPanel {
 	       calculateNextIteration();
 	   }
     }
-    */
+    
     
     public void runContinuous() {
 	   _running = true;
